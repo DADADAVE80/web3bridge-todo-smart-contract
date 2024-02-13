@@ -22,6 +22,10 @@ contract TodoDApp {
         return todos[_id];
     }
 
+    function getAllTasks() external view returns (Todo[] memory) {
+        return todos;
+    }
+
     function toggleCompleted(uint _id) public {
         Todo memory _task = todos[_id];
         _task.completed = !_task.completed;
