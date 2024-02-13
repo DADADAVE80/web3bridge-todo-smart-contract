@@ -28,6 +28,13 @@ contract TodoDApp {
         todos[_id] = _task;
     }
 
+    function updateTask(uint _id, string memory _title, string memory _description) external {
+        Todo memory _task = todos[_id];
+        _task.title = _title;
+        _task.description = _description;
+        todos[_id] = _task;
+    }
+
     function deleteTask(uint _id) external {
         delete todos[_id];
     }
