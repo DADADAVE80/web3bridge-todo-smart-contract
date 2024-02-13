@@ -1,25 +1,34 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-contract Todo {
+contract TodoDApp {
     uint public taskCount = 0;
 
-    struct Task {
+    struct Todo {
         uint id;
-        string content;
+        string title;
+        string description;
         bool completed;
     }
 
-    Task[] tasks;
+    Todo[] public todos;
 
-    function createTask(string memory _content) public {
+    function createTask(string memory _title, string memory _description) external {
+        todos[taskCount] = Todo(taskCount, _title, _description, false);
         taskCount++;
-        tasks[taskCount] = Task(taskCount, _content, false);
+    }
+
+    function getTask(uint _id) external view returns (Todo memory) {
+        return todos[_id];
     }
 
     function toggleCompleted(uint _id) public {
-        Task memory _task = tasks[_id];
+        Todo memory _task = todos[_id];
         _task.completed = !_task.completed;
-        tasks[_id] = _task;
+        todos[_id] = _task;
+    }
+
+    function deleteTask(uint _id) external {
+        delete todos[_id];
     }
 }

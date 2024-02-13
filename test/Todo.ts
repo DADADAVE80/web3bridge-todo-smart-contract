@@ -8,7 +8,7 @@ import { ethers } from "hardhat";
 
 describe("Todo dApp", function() {
     async function deployTodo() {
-        const Todo = await ethers.getContractFactory("Todo");
+        const Todo = await ethers.getContractFactory("TodoDApp");
         const todo = await Todo.deploy();
 
         return { todo };
@@ -23,10 +23,15 @@ describe("Todo dApp", function() {
     });
 
     describe("Todos", function() {
-        it("Display list of todos", async function() {
+        it("Create todo", async function() {
             const {todo} = await loadFixture(deployTodo);
 
+            await todo.createTask("Task 1", "Description 1");
 
-        })
+            const todos = todo.todos(0);
+
+            expect(todos.title).to.equal("Task 1");
+            expect(todos.description).to.equal("Description 1");
+        });
     })
 });
